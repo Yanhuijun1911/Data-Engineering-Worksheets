@@ -1,0 +1,88 @@
+/* SCDs in SQL - Group 1
+
+1. Is a type 1 change because its just a simple override of incorrect data; changing a name to the correct spelling. We are using type 1 as there is no other data to change. 
+
+2. Is a type 2 change because we’re updating the value to the subscriptions from the new start date; adding a new row to account for the subscription price increase while retaining the history of the price previous to the date it was increased. We are choosing type 2 as we want to retain the information of the pricing before and know the date that the pricing was increased. 
+
+3. Is type 2 change because we are updating an individuals subscription tier but also want to have access to their old records; incase we want to analyse the changes of tiers over time
+
+4. Is a type 1 change because it is a simple correction of incorrect data. We want to use type 1 as we do not  need to keep the old data of the incorrect birthplace
+
+5. Is a type 3 change because we add to add a new column to display the change in tiers for the whole table. We use type 3 as it affects the whole data table and reflects new changes. This is also a more efficient change you can group by every instance of tier 4 and change that accordingly rather than having to filter by every ‘tier’ column that contains tier 4 individually 
+
+6. Is type 1 change as we are correcting the incorrect birthdate with the correct one. We chose type 1 as it only requires a change in a single cell
+
+7. Is a type 2 change as we are updating a place of residence beginning at a certain date; adding a row. We use type 2 however, as we want to keep the address that the customer resided  in previously
+
+All type 1 changes are made first, then type 2 and finally type 3. 
+
+For all type 2 changes, we ensured version control. We did this by updating the ‘current’ and ‘current_flag’ columns for the customers and subscriptions tables respectively, but only on the rows that required the changes. 
+
+For the type 3 change, we also ensured version control on the columns by changing the names to indicate that the column that was updated (tier -> previous_tier, new current column -> tier)
+*/
+
+
+CREATE TABLE de_challenge.aj_country_city_dim as
+SELECT *
+    FROM de_challenge.aj_country_dim
+    INNER JOIN de_challenge.aj_city_dim;
+    ---ON de_challenge.aj_country_dim.country_key = de_challenge.aj_city_dim.country_key
+
+
+CREATE TABLE de_challenge.aj_star_account_manager_dim(
+    account_manager_key INT NOT NULL, 
+    manager_first_name VARCHAR(100) NOT NULL,
+    manager_last_name VARCHAR(100) NOT NULL,
+    manager_email VARCHAR(100) NOT NULL,
+    manager_address VARCHAR(100) NOT NULL,
+    manager_city_key INT NOT NULL,
+ PRIMARY KEY(account_manager_key)
+);
+    
+    
+    
+-------------------------------
+
+CREATE TABLE de_challenge.aj_star_manager_membership as 
+SELECT
+    *
+FROM
+    de_challenge.aj_account_manager_dim man
+    join de_challenge.aj_membership_dim using (account_manager_key);
+    
+
+ALTER TABLE de_challenge.aj_star_manager_membership
+    ADD CONSTRAINT membership_key PRIMARY KEY (membership_key);
+    
+    
+SELECT
+    * 
+FROM
+de_challenge.aj_star_manager_membership;
+
+
+
+CREATE TABLE de_challenge.aj_star_country_city_center_service as
+SELECT
+    *
+FROM
+    de_challenge.aj_country_dim 
+    join de_challenge.aj_city_dim using (country_key)
+    join de_challenge.aj_centre_dim using (city_key)
+    join de_challenge.aj_service_dim using (centre_key);
+    
+ALTER TABLE de_challenge.aj_star_country_city_center_service
+    ADD CONSTRAINT service_key PRIMARY KEY (service_key);
+    
+SELECT
+    *
+FROM
+    de_challenge.aj_star_country_city_center_service ;
+    
+    
+SELECT
+    *
+FROM
+    de_challenge.aj_star_membership;
+    
+

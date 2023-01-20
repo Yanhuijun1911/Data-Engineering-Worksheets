@@ -1,0 +1,204 @@
+
+-----------Exercise one---------------------
+
+
+SELECT
+	*
+FROM
+	student.limit_offuture
+
+
+
+SELECT
+	sum(l.profit) sum_profit,
+	sum(l.sales) sum_sales,
+	l.region
+FROM
+	student.limit_offuture l
+	
+GROUP BY
+	  l.region
+ORDER BY
+	sum_profit
+--------------------------------
+SELECT
+	l.country,
+	Max(l.shipping_cost) max_shippingcost
+FROM
+	student.limit_offuture l
+	
+GROUP BY
+	  l.country
+ORDER BY
+	max_shippingcost desc
+---------------------------------------
+
+
+SELECT
+	l.category,
+	l.sub_category,
+	sum(l.sales) sum_sales
+	
+FROM
+	student.limit_offuture l
+GROUP BY
+	l.category, l.sub_category
+ORDER BY
+	l.category,sum_sales desc
+	
+
+-------	Quality Check------
+SELECT
+	sum(sales) sum_sales,
+	sum(quantity) sum_quantity,
+	sum(discount) sum_discount,
+	sum(profit) sum_profit,
+	Max(sales) max_sales,
+	Max(quantity) max_quantity,
+	Max(discount) max_discount,
+	Max(profit) max_profit,
+	Min(sales) min_sales,
+	Min(quantity) min_quantity,
+	Min(discount) min_discount,
+	Min(profit) min_profit,
+	avg(sales) avg_sales,
+	avg(quantity) avg_quantity,
+	avg(discount) avg_discount,
+	avg(profit) avg_profit
+	
+FROM
+	student.limit_offuture
+
+ROW_id
+23847: 4631
+21260: 21002
+12094: 6938
+42213: 13300
+46492: 29850
+15967: 21023
+20201: 7646
+11809: 7477
+6696: 33286
+4215
+
+SELECT
+	*
+FROM
+	student.limit_offuture
+WHERE
+	row_id = 6696
+
+
+SELECT
+	*
+FROM
+	student.limit_offuture
+WHERE
+	row_id = 4125
+
+SELECT
+	*
+FROM
+	student.limit_offuture
+WHERE
+	row_id = 23847
+
+
+SELECT
+	*
+FROM
+	student.limit_offuture
+WHERE
+	row_id =21260
+--------------------
+
+SELECT 
+	*
+FROM
+	
+student.limit_offuture l
+
+--------------
+	
+SELECT
+    l.customer_id,
+    sum(l.profit)
+FROM
+    student.limit_offuture l
+WHERE
+    profit <= 0
+GROUP BY
+    l.customer_id
+ORDER BY
+    l.customer_id asc
+-------------------------------
+SELECT
+	customer_id,
+	count(customer_id) order_times,
+	sum(profit) profit
+FROM
+    student.limit_offuture l
+GROUP BY
+	customer_id
+Order BY
+	order_times desc, profit desc
+------------------------------
+---Number of customer per country by Antisar
+SELECT COUNT(customer_id),(country)
+FROM limit_offuture
+group by country
+order by count(customer_id) desc
+
+-----------------discount-------
+SELECT
+	discount,
+	category,
+	sub_category
+	
+FROM
+	student.limit_offuture
+WHERE
+	discount > 0
+GROUP BY
+	discount,category,sub_category
+ORDER BY
+	discount desc, category
+------------------------------
+SELECT 
+	*
+FROM
+	
+student.limit_offuture l
+	
+	
+SELECT
+	market,
+	region,
+	country,
+	state_,
+	city,
+	ship_mode,
+	count(ship_mode),
+	sum(shipping_cost)
+FROM
+	student.limit_offuture
+GROUP BY
+	market,region,country,state_,city,ship_mode
+ORDER BY
+	market,region,country,state_,city,ship_mode
+----------------------------------
+
+SELECT
+	market,
+	region,
+	ship_mode,
+	count(ship_mode),
+	sum(shipping_cost)
+FROM
+	student.limit_offuture
+GROUP BY
+	market,region,ship_mode
+ORDER BY
+	market,region,ship_mode
+
+	
