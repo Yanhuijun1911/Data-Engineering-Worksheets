@@ -2,6 +2,7 @@
 
 This is the repository containing the worksheets completed during the data engineering training at the Digital Futures. 
 It contains the practice topics of APIs, Web scraping, Regex, exploratory data analysis (EDA), and data modeling in Python.
+It also included the practice of SQL.
 
 The main content of each assignment is as follows:
 
@@ -35,3 +36,7 @@ Conducted one hot encoding to the diamonds dataset to prepare for data modeling 
 ## **Data Spliting practice**:
 
 Practised the train-test split technique with the diamonds dataset to evaluate the prediction algorithm.
+
+## **SQL practice**:
+Practised PostgreSQL in Sandbox. It contained designing data schema, creating tables, reading the data, and extracting the data.
+
